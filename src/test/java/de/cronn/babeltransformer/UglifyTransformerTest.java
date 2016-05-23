@@ -14,20 +14,19 @@ import de.cronn.babeltransform.UglifyTransformer;
  */
 public class UglifyTransformerTest {
 	@Test
-	public void testCacheWithoutUglify() throws IOException, URISyntaxException {
-		UglifyTransformer testee = new UglifyTransformer();
-		String content = testee.transform(TestUtils.readFile("/testData/output_babel.js"));
+	public void testTransform() throws IOException, URISyntaxException {
+		final UglifyTransformer testee = new UglifyTransformer();
+		final String content = testee.transform(TestUtils.readFile("/testData/output_babel.js"));
 		TestUtils.assertThatEqualsFile(content, "/testData/output_uglified.js");
 	}
-	
+
 	@Test
 	public void multipleUsage() throws IOException, URISyntaxException {
-		UglifyTransformer testee = new UglifyTransformer();
+		final UglifyTransformer testee = new UglifyTransformer();
 
-		String input = TestUtils.readFile("/testData/output_babel.js");
-		for(int i=0; i< 100; i++)
-		{
-			String content = testee.transform(input);
+		final String input = TestUtils.readFile("/testData/output_babel.js");
+		for (int i = 0; i < 100; i++) {
+			final String content = testee.transform(input);
 			TestUtils.assertThatEqualsFile(content, "/testData/output_uglified.js");
 		}
 	}

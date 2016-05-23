@@ -18,25 +18,25 @@ import de.cronn.babeltransform.JsxCache.AssetEntry;
 public class JsxCacheTest {
 	@Test
 	public void testCacheWithoutUglify() throws IOException, URISyntaxException {
-		JsxCache testee = new JsxCache(false, false);
-		AssetEntry entry = testee.get(new File(getClass().getResource("/testData/input_jsx.js").getFile()));
+		final JsxCache testee = new JsxCache(false, false);
+		final AssetEntry entry = testee.get(new File(getClass().getResource("/testData/input_jsx.js").getFile()));
 		TestUtils.assertThatEqualsFile(entry.content, "/testData/output_babel.js");
 	}
 
 	@Test
 	public void testCacheWithUglify() throws IOException, URISyntaxException {
-		JsxCache testee = new JsxCache(true, false);
-		AssetEntry entry = testee.get(getTestDataFile("/testData/input_jsx.js"));
+		final JsxCache testee = new JsxCache(true, false);
+		final AssetEntry entry = testee.get(getTestDataFile("/testData/input_jsx.js"));
 		TestUtils.assertThatEqualsFile(entry.content, "/testData/output_uglified.js");
 	}
 
-	File getTestDataFile(String fileName) {
+	File getTestDataFile(final String fileName) {
 		return new File(getClass().getResource(fileName).getFile());
 	}
 
 	@Test(expected = JavaScriptException.class)
 	public void testCacheError() throws IOException, URISyntaxException {
-		JsxCache testee = new JsxCache(false, false);
+		final JsxCache testee = new JsxCache(false, false);
 		testee.get(new File(getClass().getResource("/testData/input_jsx_error.js").getFile()));
 	}
 }

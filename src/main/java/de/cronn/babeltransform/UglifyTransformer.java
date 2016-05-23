@@ -24,8 +24,8 @@ public class UglifyTransformer extends JsTransformBase {
 	}
 
 	@Override
-	protected String transformInContext(final String jsx, Context ctx) {
-		Function transform = (Function) exports.get("convenience", topLevelScope);
+	protected String transformInContext(final String jsx, final Context ctx) {
+		final Function transform = (Function) exports.get("convenience", topLevelScope);
 		return (String) transform.call(ctx, topLevelScope, exports, new String[] { jsx });
 	}
 }

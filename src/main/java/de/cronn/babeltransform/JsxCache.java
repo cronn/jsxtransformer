@@ -38,7 +38,7 @@ public class JsxCache {
 	 * @throws URISyntaxException
 	 *             on URI formatting error for javascript libraries
 	 */
-	public JsxCache(boolean uglify, boolean useDiskCache) throws IOException, URISyntaxException {
+	public JsxCache(final boolean uglify, final boolean useDiskCache) throws IOException, URISyntaxException {
 		this.diskCache = useDiskCache;
 		jsxTransformer = new BabelTransformer();
 		if (uglify) {
@@ -84,7 +84,8 @@ public class JsxCache {
 	 * @return The compiled content as JavaScript.
 	 * @throws IOException
 	 *             on compile or file read/write error.
-	 * @throws JavaScriptException on compilation error
+	 * @throws JavaScriptException
+	 *             on compilation error
 	 */
 
 	public AssetEntry get(final File file) throws IOException {

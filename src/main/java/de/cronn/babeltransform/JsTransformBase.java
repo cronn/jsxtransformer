@@ -25,19 +25,25 @@ public abstract class JsTransformBase {
 
 	private List<URI> modulePaths;
 
-	private String transformJs;
-
-	private Context ctx;
-
 	protected void init(final String transformJs, final List<URI> modulePaths) {
-		this.transformJs = Objects.requireNonNull(transformJs);
 		this.modulePaths = Objects.requireNonNull(modulePaths);
-		
-		ctx = Context.enter();
+
+		final Context ctx = Context.enter();
+
 		// Will otherwise crash on huge libraries like babel.js
 		ctx.setOptimizationLevel(-1);
-		
-		init(ctx);
+
+		try {
+			final RequireBuilder builder = new RequireBuilder();
+			builder.setModuleScriptProvider(buildModulePaths());
+
+			topLevelScope = ctx.initStandardObjects();
+			final Require require = builder.createRequire(ctx, topLevelScope);
+
+			exports = require.requireMain(ctx, transformJs);
+		} finally {
+			Context.exit();
+		}
 	}
 
 	/**
@@ -51,18 +57,15 @@ public abstract class JsTransformBase {
 		return new SoftCachingModuleScriptProvider(new UrlModuleSourceProvider(modulePaths, null));
 	}
 
-	private void init(final Context ctx) {
-		final RequireBuilder builder = new RequireBuilder();
-		builder.setModuleScriptProvider(buildModulePaths());
-
-		topLevelScope = ctx.initStandardObjects();
-		final Require require = builder.createRequire(ctx, topLevelScope);
-
-		exports = require.requireMain(ctx, transformJs);
-	}
-
 	public synchronized String transform(final String input) {
-		return transformInContext(input, ctx);
+
+		final Context ctx = Context.enter();
+		ctx.setOptimizationLevel(-1);
+		try {
+			return transformInContext(input, ctx);
+		} finally {
+			Context.exit();
+		}
 	}
 
 	protected abstract String transformInContext(String input, Context ctx);
