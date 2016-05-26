@@ -1,6 +1,7 @@
 package de.cronn.babeltransform;
 
 import java.io.IOException;
+import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Arrays;
 
@@ -20,7 +21,7 @@ public class UglifyTransformer extends JsTransformBase {
 	 * @throws URISyntaxException
 	 */
 	public UglifyTransformer() throws IOException, URISyntaxException {
-		init("uglify-js", Arrays.asList(this.getClass().getResource("/transformJs/uglify/").toURI()));
+		init("uglify-js", Arrays.asList("/transformJs/uglify/"));
 	}
 
 	@Override

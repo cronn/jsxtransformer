@@ -1,6 +1,7 @@
 package de.cronn.babeltransform;
 
 import java.io.IOException;
+import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Arrays;
 
@@ -20,7 +21,7 @@ public class BabelTransformer extends JsTransformBase {
 	 * Create a new Babel.js based transformer
 	 */
 	public BabelTransformer() throws IOException, URISyntaxException {
-		init("babel", Arrays.asList(getClass().getResource("/transformJs/").toURI()));
+		init("babel", Arrays.asList("/transformJs/"));
 	}
 
 	protected String transformInContext(final String jsx, final Context ctx) {

@@ -23,9 +23,9 @@ public abstract class JsTransformBase {
 
 	protected ScriptableObject topLevelScope;
 
-	private List<URI> modulePaths;
+	private List<String> modulePaths;
 
-	protected void init(final String transformJs, final List<URI> modulePaths) {
+	protected void init(final String transformJs, final List<String> modulePaths) {
 		this.modulePaths = Objects.requireNonNull(modulePaths);
 
 		final Context ctx = Context.enter();
@@ -35,11 +35,11 @@ public abstract class JsTransformBase {
 
 		try {
 			final RequireBuilder builder = new RequireBuilder();
+			builder.setSandboxed(false);
 			builder.setModuleScriptProvider(buildModulePaths());
 
 			topLevelScope = ctx.initStandardObjects();
 			final Require require = builder.createRequire(ctx, topLevelScope);
-
 			exports = require.requireMain(ctx, transformJs);
 		} finally {
 			Context.exit();
@@ -54,7 +54,7 @@ public abstract class JsTransformBase {
 	 * @return list of URIs to module paths
 	 */
 	private SoftCachingModuleScriptProvider buildModulePaths() {
-		return new SoftCachingModuleScriptProvider(new UrlModuleSourceProvider(modulePaths, null));
+		return new SoftCachingModuleScriptProvider(new ClasspathModuleProvider(modulePaths));
 	}
 
 	public synchronized String transform(final String input) {
