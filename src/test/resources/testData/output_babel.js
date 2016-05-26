@@ -3,7 +3,7 @@
 var MyComponent = React.createClass({ displayName: 'MyComponent', 
 	render: function render() 
 	{
-		return React.createElement('h1', null, 'Hallo Welt!');} });
+		return React.createElement('h1', null, 'Hello World!');} });
 
 
 
