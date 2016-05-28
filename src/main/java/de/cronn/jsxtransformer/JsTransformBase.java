@@ -1,4 +1,4 @@
-package de.cronn.babeltransform;
+package de.cronn.jsxtransformer;
 
 import java.net.URI;
 import java.util.List;

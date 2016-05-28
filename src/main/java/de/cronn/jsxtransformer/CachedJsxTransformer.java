@@ -1,4 +1,4 @@
-package de.cronn.babeltransform;
+package de.cronn.jsxtransformer;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -20,7 +20,7 @@ import org.mozilla.javascript.JavaScriptException;
  *
  * @author Hanno Fellmann, cronn GmbH
  */
-public class CachedJsxCompiler {
+public class CachedJsxTransformer {
 	private BabelTransformer jsxTransformer;
 
 	private UglifyTransformer uglifier;
@@ -29,7 +29,7 @@ public class CachedJsxCompiler {
 
 	private boolean recompile;
 
-	public CachedJsxCompiler(boolean uglify, boolean recompile) throws IOException {
+	public CachedJsxTransformer(boolean uglify, boolean recompile) throws IOException {
 		jsxTransformer = new BabelTransformer();
 		if (uglify) {
 			uglifier = new UglifyTransformer();

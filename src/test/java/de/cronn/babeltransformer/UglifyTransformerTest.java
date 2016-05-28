@@ -5,7 +5,7 @@ import java.net.URISyntaxException;
 
 import org.junit.Test;
 
-import de.cronn.babeltransform.UglifyTransformer;
+import de.cronn.jsxtransformer.UglifyTransformer;
 
 /**
  * Test for Uglifier

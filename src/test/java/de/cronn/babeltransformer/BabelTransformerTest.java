@@ -11,7 +11,7 @@ import java.util.concurrent.Future;
 
 import org.junit.Test;
 
-import de.cronn.babeltransform.BabelTransformer;
+import de.cronn.jsxtransformer.BabelTransformer;
 
 /**
  * Test for JsxCache
