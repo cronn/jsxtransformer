@@ -20,8 +20,8 @@ public class UglifyTransformer extends JsTransformBase {
 	 * @throws IOException
 	 * @throws URISyntaxException
 	 */
-	public UglifyTransformer() throws IOException, URISyntaxException {
-		init("uglify-js", Arrays.asList("/transformJs/uglify/"));
+	public UglifyTransformer() throws IOException {
+		init("uglify-js", "/transformJs/uglify/");
 	}
 
 	@Override

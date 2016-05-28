@@ -12,30 +12,22 @@ import org.mozilla.javascript.commonjs.module.provider.ModuleSource;
 import org.mozilla.javascript.commonjs.module.provider.ModuleSourceProviderBase;
 
 /**
- * Special module provider for Rhino to load from classpath,
- * which is not supported by java.net.URI
+ * Special module provider for Rhino to load from classpath, which is not
+ * supported by java.net.URI
  *
  * @author Hanno Fellmann, cronn GmbH
  */
 public class ClasspathModuleProvider extends ModuleSourceProviderBase {
-	private List<String> modulePaths;
+	private String modulePath;
 
-	public ClasspathModuleProvider(List<String> modulePaths) {
-		this.modulePaths = modulePaths;
+	public ClasspathModuleProvider(String modulePath) {
+		this.modulePath = modulePath;
 	}
 
 	@Override
 	protected ModuleSource loadFromPrivilegedLocations(String moduleId, Object validator)
 			throws IOException, URISyntaxException {
-		for (String path : modulePaths) {
-			InputStream stream = getClass().getResourceAsStream(path + moduleId + ".js");
-			if (stream != null) {
-				URI uri = getClass().getResource(path + moduleId + ".js").toURI();
-				URI base = getClass().getResource(path).toURI();
-				return new ModuleSource(new InputStreamReader(stream, StandardCharsets.UTF_8), null, uri, base, null);
-			}
-		}
-		return null;
+		return createModuleSource(new URI(moduleId + ".js"), new URI("/"), modulePath + moduleId + ".js");
 	}
 
 	@Override
@@ -46,8 +38,16 @@ public class ClasspathModuleProvider extends ModuleSourceProviderBase {
 
 	@Override
 	protected ModuleSource loadFromUri(URI uri, URI base, Object validator) throws IOException, URISyntaxException {
-		String moduleId = base.relativize(uri).toString();
-		return loadFromPrivilegedLocations(moduleId, null);
+		// Get relative path to current path
+		return createModuleSource(new URI(uri + ".js"), base, modulePath + uri.toString() + ".js");
+	}
+
+	private ModuleSource createModuleSource(URI uri, URI base, String path) {
+		InputStream stream = getClass().getResourceAsStream(path);
+		if (stream != null) {
+			return new ModuleSource(new InputStreamReader(stream, StandardCharsets.UTF_8), null, uri, base, null);
+		}
+		return null;
 	}
 
 }

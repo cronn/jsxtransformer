@@ -1,14 +1,13 @@
 package de.cronn.babeltransformer;
 
-import java.io.File;
 import java.io.IOException;
-import java.net.URISyntaxException;
 
 import org.junit.Test;
 import org.mozilla.javascript.JavaScriptException;
 
-import de.cronn.babeltransform.JsxCache;
-import de.cronn.babeltransform.JsxCache.AssetEntry;
+import de.cronn.babeltransform.CachedJsxCompiler;
+import de.cronn.babeltransform.CachedJsxCompiler.AssetEntry;
+import de.cronn.babeltransform.CachedJsxCompiler.ContentProvider;
 
 /**
  * Test for BabelTransformer
@@ -17,26 +16,31 @@ import de.cronn.babeltransform.JsxCache.AssetEntry;
  */
 public class JsxCacheTest {
 	@Test
-	public void testCacheWithoutUglify() throws IOException, URISyntaxException {
-		final JsxCache testee = new JsxCache(false, false);
-		final AssetEntry entry = testee.get(new File(getClass().getResource("/testData/input_jsx.js").getFile()));
+	public void testCacheWithoutUglify() throws IOException {
+		final CachedJsxCompiler testee = new CachedJsxCompiler(false, false);
+		final AssetEntry entry = getCompiled(testee, "/testData/input_jsx.js");
 		TestUtils.assertThatEqualsFile(entry.content, "/testData/output_babel.js");
 	}
 
 	@Test
-	public void testCacheWithUglify() throws IOException, URISyntaxException {
-		final JsxCache testee = new JsxCache(true, false);
-		final AssetEntry entry = testee.get(getTestDataFile("/testData/input_jsx.js"));
+	public void testCacheWithUglify() throws IOException {
+		final CachedJsxCompiler testee = new CachedJsxCompiler(true, false);
+		final AssetEntry entry = getCompiled(testee, "/testData/input_jsx.js");
 		TestUtils.assertThatEqualsFile(entry.content, "/testData/output_uglified.js");
 	}
 
-	File getTestDataFile(final String fileName) {
-		return new File(getClass().getResource(fileName).getFile());
+	@Test(expected = JavaScriptException.class)
+	public void testCacheError() throws IOException {
+		final CachedJsxCompiler testee = new CachedJsxCompiler(false, false);
+		getCompiled(testee, "/testData/input_jsx_error.js");
 	}
 
-	@Test(expected = JavaScriptException.class)
-	public void testCacheError() throws IOException, URISyntaxException {
-		final JsxCache testee = new JsxCache(false, false);
-		testee.get(new File(getClass().getResource("/testData/input_jsx_error.js").getFile()));
+	private AssetEntry getCompiled(final CachedJsxCompiler testee, final String key) throws IOException {
+		return testee.get(key, new ContentProvider() {
+			@Override
+			public String get(String key) throws IOException {
+				return TestUtils.readFile(key);
+			}
+		});
 	}
 }

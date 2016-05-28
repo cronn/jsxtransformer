@@ -20,8 +20,8 @@ public class BabelTransformer extends JsTransformBase {
 	/**
 	 * Create a new Babel.js based transformer
 	 */
-	public BabelTransformer() throws IOException, URISyntaxException {
-		init("babel", Arrays.asList("/transformJs/"));
+	public BabelTransformer() throws IOException {
+		init("babel", "/transformJs/");
 	}
 
 	protected String transformInContext(final String jsx, final Context ctx) {
