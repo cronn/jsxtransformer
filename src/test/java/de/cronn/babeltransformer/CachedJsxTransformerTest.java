@@ -14,7 +14,7 @@ import de.cronn.jsxtransformer.CachedJsxTransformer.ContentProvider;
  * 
  * @author Hanno Fellmann, cronn GmbH
  */
-public class JsxCacheTest {
+public class CachedJsxTransformerTest {
 	@Test
 	public void testCacheWithoutUglify() throws IOException {
 		final CachedJsxTransformer testee = new CachedJsxTransformer(false, false);
