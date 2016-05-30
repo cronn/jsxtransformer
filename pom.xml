@@ -4,6 +4,7 @@
 	<groupId>de.cronn.jsxtransformer</groupId>
 	<artifactId>jsxtransformer</artifactId>
 	<version>0.0.2-SNAPSHOT</version>
+  	<packaging>jar</packaging>
 
 	<name>JsxTransformer</name>
 	<description>Pipeline for transforming JSX files using Babel.js and Uglify.js</description>
@@ -72,12 +73,26 @@
 						<goals>
 							<goal>jar</goal>
 						</goals>
-			            <configuration>
-			                <additionalparam>-Xdoclint:none</additionalparam>
-			            </configuration>
+						<configuration>
+							<additionalparam>-Xdoclint:none</additionalparam>
+						</configuration>
 					</execution>
 				</executions>
 			</plugin>
 		</plugins>
 	</build>
+
+	<organization>
+		<name>cronn</name>
+		<url>http://www.cronn.de</url>
+	</organization>
+
+	<developers>
+		<developer>
+			<name>Hanno Fellmann</name>
+			<email>hanno.fellmann@cronn.de</email>
+			<organization>cronn</organization>
+			<organizationUrl>http://www.cronn.de</organizationUrl>
+		</developer>
+	</developers>
 </project>

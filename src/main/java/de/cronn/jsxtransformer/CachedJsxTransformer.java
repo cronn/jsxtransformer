@@ -1,18 +1,9 @@
 package de.cronn.jsxtransformer;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.net.URISyntaxException;
-import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.UUID;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ExecutionException;
-import java.util.function.Supplier;
 
-import org.apache.commons.io.IOUtils;
 import org.mozilla.javascript.JavaScriptException;
 
 /**

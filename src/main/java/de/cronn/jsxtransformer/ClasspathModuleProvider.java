@@ -6,7 +6,6 @@ import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
 
 import org.mozilla.javascript.commonjs.module.provider.ModuleSource;
 import org.mozilla.javascript.commonjs.module.provider.ModuleSourceProviderBase;
@@ -18,6 +17,7 @@ import org.mozilla.javascript.commonjs.module.provider.ModuleSourceProviderBase;
  * @author Hanno Fellmann, cronn GmbH
  */
 public class ClasspathModuleProvider extends ModuleSourceProviderBase {
+	private static final long serialVersionUID = 1L;
 	private String modulePath;
 
 	public ClasspathModuleProvider(String modulePath) {

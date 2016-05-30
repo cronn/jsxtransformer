@@ -1,7 +1,5 @@
 package de.cronn.jsxtransformer;
 
-import java.net.URI;
-import java.util.List;
 import java.util.Objects;
 
 import org.mozilla.javascript.Context;
@@ -10,7 +8,6 @@ import org.mozilla.javascript.ScriptableObject;
 import org.mozilla.javascript.commonjs.module.Require;
 import org.mozilla.javascript.commonjs.module.RequireBuilder;
 import org.mozilla.javascript.commonjs.module.provider.SoftCachingModuleScriptProvider;
-import org.mozilla.javascript.commonjs.module.provider.UrlModuleSourceProvider;
 
 /**
  * Helper class to execute JavaScript tasks in a defined JavaScript thread
